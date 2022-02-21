@@ -20,6 +20,7 @@ public:
   uint32_t ClassID;
   std::string ClassName;
   std::vector<std::string> Students;
+  std::string ClassAddr; // Add var for Custom Host Func 0 (a simple one)
 
   /// Initial Configurations
 };

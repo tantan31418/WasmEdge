@@ -47,9 +47,27 @@ Expect<void> HostFuncExamplePrint::body([
     [maybe_unused]] Runtime::Instance::MemoryInstance *MemInst) {
   std::cout << "Class ID: " << Env.ClassID << std::endl;
   std::cout << "Class Name: " << Env.ClassName << std::endl;
+  std::cout << "Class Addr: " << Env.ClassAddr << std::endl; // Add Custom Host Func 0 (a simple one) to be printed out
   for (auto &Student : Env.Students) {
     std::cout << "Student: " << Student << std::endl;
   }
+  return {};
+}
+
+// Implement Custom Host Func 0 (a simple one), modified from "HostFuncExampleSetClassName"
+Expect<void>
+HostFuncCustomSetClassAddr::body(Runtime::Instance::MemoryInstance *MemInst,
+                                  uint32_t ClassAddrPtr,
+                                  uint32_t ClassAddrLen) {
+  // Check memory instance from module.
+  if (MemInst == nullptr) {
+    return Unexpect(ErrCode::ExecutionFailed);
+  }
+
+  char *ClassAddr = MemInst->getPointer<char *>(ClassAddrPtr);
+  std::string NewClassAddr;
+  std::copy_n(ClassAddr, ClassAddrLen, std::back_inserter(NewClassAddr));
+  Env.ClassAddr = std::move(NewClassAddr);
   return {};
 }
 

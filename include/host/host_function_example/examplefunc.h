@@ -42,5 +42,15 @@ public:
   Expect<void> body(Runtime::Instance::MemoryInstance *MemInst);
 };
 
+// Define Custom Host Func 0 (a simple one)
+class HostFuncCustomSetClassAddr
+    : public HostFuncExample<HostFuncCustomSetClassAddr> {
+public:
+  HostFuncCustomSetClassAddr(HostFuncExampleEnvironment &HostEnv)
+      : HostFuncExample(HostEnv) {}
+  Expect<void> body(Runtime::Instance::MemoryInstance *MemInst,
+                    uint32_t ClassAddrPtr, uint32_t ClassAddrLen);
+};
+
 } // namespace Host
 } // namespace WasmEdge
